@@ -15,7 +15,7 @@ export default function Modal({
   return (
     <dialog
       ref={modal}
-      className="rounded-lg backdrop:bg-black backdrop:opacity-50"
+      className="rounded-lg backdrop:bg-black backdrop:opacity-50 animate-mount"
     >
       <article className="flex flex-col gap-4 p-2">
         <div className="border-b border-b-gray-300 flex justify-end">
