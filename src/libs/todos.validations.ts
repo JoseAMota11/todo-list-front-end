@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const TodoValidator = z.object({
+export const TodoSchema = z.object({
   title: z
     .string({
       required_error: 'Title is required',
