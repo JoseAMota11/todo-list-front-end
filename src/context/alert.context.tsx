@@ -8,6 +8,7 @@ import React, {
 type Alert = {
   show: boolean;
   message: string;
+  type: 'success' | 'informational';
 };
 
 type AlertContextType = {
@@ -24,10 +25,19 @@ export default function AlertWrapper({
 }: {
   children: React.ReactNode;
 }) {
-  const [alert, setAlert] = useState<Alert>({ show: false, message: '' });
+  const [alert, setAlert] = useState<Alert>({
+    show: false,
+    message: '',
+    type: 'success',
+  });
 
   return (
-    <AlertContext.Provider value={{ alert, setAlert }}>
+    <AlertContext.Provider
+      value={{
+        alert,
+        setAlert,
+      }}
+    >
       {children}
     </AlertContext.Provider>
   );

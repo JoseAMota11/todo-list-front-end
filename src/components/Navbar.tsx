@@ -1,12 +1,10 @@
-import { RefObject } from 'react';
+import { useModal } from '../hooks/useModal';
 
-export default function Navbar({
-  modal,
-}: {
-  modal: RefObject<HTMLDialogElement>;
-}) {
+export default function Navbar() {
+  const { createTodoModal } = useModal();
+
   const openModal = () => {
-    modal.current?.showModal();
+    createTodoModal.current?.showModal();
   };
 
   return (

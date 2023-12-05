@@ -4,19 +4,15 @@ import { TodoSchema } from '../libs/todos.validations';
 import { MdErrorOutline } from 'react-icons/md';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Todos } from '../services/todos.services';
-import { RefObject } from 'react';
 import { useAlert } from '../hooks/useAlert';
+import { useModal } from '../hooks/useModal';
 
 type Inputs = {
   title: string;
   description: string;
 };
 
-export default function CreateTodoForm({
-  modal,
-}: {
-  modal: RefObject<HTMLDialogElement>;
-}) {
+export default function CreateTodoForm() {
   const {
     register,
     handleSubmit,
@@ -26,14 +22,15 @@ export default function CreateTodoForm({
     resolver: zodResolver(TodoSchema),
   });
   const { setAlert } = useAlert();
+  const { createTodoModal } = useModal();
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: Todos.post,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
-      modal.current?.close();
+      createTodoModal.current?.close();
       reset({ title: '', description: '' });
-      setAlert({ show: true, message: data.message });
+      setAlert({ show: true, message: data.message, type: 'success' });
     },
   });
 

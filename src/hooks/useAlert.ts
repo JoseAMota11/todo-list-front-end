@@ -7,7 +7,10 @@ export const useAlert = () => {
   if (context) {
     const { alert, setAlert } = context;
 
-    return { alert, setAlert };
+    return {
+      alert,
+      setAlert,
+    };
   } else {
     throw new Error('useAlert must be used inside AlertContext context');
   }

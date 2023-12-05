@@ -17,4 +17,9 @@ export class Todos {
     const response = await axios.post<{ message: string }>(URL, data);
     return response.data;
   }
+
+  static async delete(id: Todo['id']) {
+    const response = await axios.delete<{ message: string }>(`${URL}/${id}`);
+    return response.data;
+  }
 }
