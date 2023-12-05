@@ -1,12 +1,12 @@
 import { BarLoader } from 'react-spinners';
-import { getTodos } from '../services/todos.services';
+import { Todos } from '../services/todos.services';
 import { useQuery } from '@tanstack/react-query';
 import Card from './Card';
 
 export default function CardContainer() {
   const { isLoading, isError, error, data } = useQuery({
     queryKey: ['todos'],
-    queryFn: getTodos,
+    queryFn: Todos.get,
   });
 
   if (isLoading) {

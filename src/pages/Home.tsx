@@ -13,7 +13,7 @@ export default function Home() {
         <CardContainer />
       </main>
       <Modal modal={modal}>
-        <CreateTodoForm />
+        <CreateTodoForm modal={modal} />
       </Modal>
     </>
   );

@@ -2,25 +2,42 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { TodoSchema } from '../libs/todos.validations';
 import { MdErrorOutline } from 'react-icons/md';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Todos } from '../services/todos.services';
+import { RefObject } from 'react';
 
 type Inputs = {
   title: string;
   description: string;
 };
 
-export default function CreateTodoForm() {
+export default function CreateTodoForm({
+  modal,
+}: {
+  modal: RefObject<HTMLDialogElement>;
+}) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(TodoSchema),
+  });
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: Todos.post,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
+      modal.current?.close();
+      reset({ title: '', description: '' });
+    },
   });
 
   return (
     <form
       className="w-[360px] flex flex-col gap-4"
-      onSubmit={handleSubmit((data) => console.log(data))}
+      onSubmit={handleSubmit((data) => mutation.mutate(data))}
     >
       <label htmlFor="title" className="flex flex-col gap-1">
         <span className="font-semibold">Title</span>
