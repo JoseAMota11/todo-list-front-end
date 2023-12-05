@@ -3,12 +3,17 @@ import { useForm } from 'react-hook-form';
 import { TodoSchema } from '../libs/todos.validations';
 import { MdErrorOutline } from 'react-icons/md';
 
+type Inputs = {
+  title: string;
+  description: string;
+};
+
 export default function CreateTodoForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<Inputs>({
     resolver: zodResolver(TodoSchema),
   });
 
@@ -29,7 +34,7 @@ export default function CreateTodoForm() {
         {errors.title?.message ? (
           <span className="text-sm text-red-600 flex gap-1 items-center">
             <MdErrorOutline size={18} className="fill-red-600" />
-            {errors?.title.message as string}
+            {errors.title.message}
           </span>
         ) : null}
       </label>
@@ -44,7 +49,7 @@ export default function CreateTodoForm() {
         {errors.description?.message ? (
           <span className="text-sm text-red-600 flex gap-1 items-center">
             <MdErrorOutline size={18} className="fill-red-600" />
-            {errors.description.message as string}
+            {errors.description.message}
           </span>
         ) : null}
       </label>
