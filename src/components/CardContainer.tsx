@@ -18,7 +18,7 @@ export default function CardContainer() {
   }
 
   return (
-    <div className="w-[800px] grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] auto-rows-[100px] gap-2">
+    <div className="w-[800px] max-[800px]:px-2 grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] auto-rows-[100px] gap-2">
       {data?.map(({ id, title, description }) => (
         <Card key={id} id={id} title={title} description={description} />
       ))}

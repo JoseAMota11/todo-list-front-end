@@ -12,12 +12,13 @@ export default function Modal({
 }) {
   const closeModal = () => {
     modal.current?.close();
+    document.body.style.overflow = 'auto';
   };
 
   return (
     <dialog
       ref={modal}
-      className="rounded-lg backdrop:bg-black backdrop:opacity-50 animate-mount"
+      className="rounded-lg backdrop:bg-black backdrop:opacity-30 animate-mount"
     >
       <article className="flex flex-col gap-4 p-2">
         <div className="border-b border-b-gray-300 flex justify-between items-center">

@@ -29,6 +29,7 @@ export default function CreateTodoForm() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
       createTodoModal.current?.close();
+      document.body.style.overflow = 'auto';
       reset({ title: '', description: '' });
       setAlert({ show: true, message: data.message, type: 'success' });
     },
@@ -36,7 +37,7 @@ export default function CreateTodoForm() {
 
   return (
     <form
-      className="w-[360px] flex flex-col gap-4"
+      className="w-[360px] max-[400px]:w-[300px] flex flex-col gap-4"
       onSubmit={handleSubmit((data) => mutation.mutate(data))}
     >
       <label htmlFor="title" className="flex flex-col gap-1">

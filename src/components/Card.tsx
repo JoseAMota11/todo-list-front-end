@@ -20,10 +20,12 @@ export default function Card({ id, title, description }: Partial<Todo>) {
 
   const handleOpen = () => {
     deleteTodoModal.current?.showModal();
+    document.body.style.overflow = 'hidden';
   };
 
   const handleClose = () => {
     deleteTodoModal.current?.close();
+    document.body.style.overflow = 'auto';
   };
 
   const handleDelete = () => {
@@ -48,7 +50,7 @@ export default function Card({ id, title, description }: Partial<Todo>) {
       </div>
       <Modal modal={deleteTodoModal} title="Delete TO-DO">
         <div>
-          <p className="mb-2">Are you sure you want to delete this todo?</p>
+          <p className="mb-4">Are you sure you want to delete this todo?</p>
           <div className="flex justify-between gap-4 [&>button]:flex-1 [&>button]:h-[32px] [&>button]:rounded-md [&>button]:font-semibold">
             <button
               className="outline outline-1 outline-gray-800 hover:bg-gray-800 hover:outline-white hover:text-white transition-colors"
