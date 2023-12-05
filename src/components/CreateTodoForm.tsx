@@ -5,6 +5,7 @@ import { MdErrorOutline } from 'react-icons/md';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Todos } from '../services/todos.services';
 import { RefObject } from 'react';
+import { useAlert } from '../hooks/useAlert';
 
 type Inputs = {
   title: string;
@@ -24,13 +25,15 @@ export default function CreateTodoForm({
   } = useForm<Inputs>({
     resolver: zodResolver(TodoSchema),
   });
+  const { setAlert } = useAlert();
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: Todos.post,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
       modal.current?.close();
       reset({ title: '', description: '' });
+      setAlert({ show: true, message: data.message });
     },
   });
 

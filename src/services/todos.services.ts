@@ -15,6 +15,6 @@ export class Todos {
 
   static async post(data: Pick<Todo, 'title' | 'description'>) {
     const response = await axios.post<{ message: string }>(URL, data);
-    return response.data.message;
+    return response.data;
   }
 }
