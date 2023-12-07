@@ -5,9 +5,9 @@ export const useModal = () => {
   const context = useContext(ModalContext);
 
   if (context) {
-    const { createTodoModal } = context;
+    const { createTodoModal, deleteTodoModal } = context;
 
-    return { createTodoModal };
+    return { createTodoModal, deleteTodoModal };
   } else {
     throw new Error('useModal must be used inside ModalContext context');
   }

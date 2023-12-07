@@ -2,6 +2,7 @@ import React, { RefObject, createContext, useRef } from 'react';
 
 type ModalContextType = {
   createTodoModal: RefObject<HTMLDialogElement>;
+  deleteTodoModal: RefObject<HTMLDialogElement>;
 };
 
 export const ModalContext = createContext<ModalContextType | undefined>(
@@ -14,9 +15,10 @@ export default function ModalWrapper({
   children: React.ReactNode;
 }) {
   const createTodoModal = useRef<HTMLDialogElement>(null);
+  const deleteTodoModal = useRef<HTMLDialogElement>(null);
 
   return (
-    <ModalContext.Provider value={{ createTodoModal }}>
+    <ModalContext.Provider value={{ createTodoModal, deleteTodoModal }}>
       {children}
     </ModalContext.Provider>
   );
