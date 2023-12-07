@@ -3,8 +3,8 @@ import CreateTodoForm from '../components/CreateTodoForm';
 import Modal from '../components/Modal';
 import Navbar from '../components/Navbar';
 import { useAlert } from '../hooks/useAlert';
-import Alert from '../components/Alert';
 import { useModal } from '../hooks/useModal';
+import Alert from '../components/Alert';
 
 export default function Home() {
   const { createTodoModal } = useModal();

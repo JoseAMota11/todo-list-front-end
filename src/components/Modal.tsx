@@ -6,7 +6,7 @@ export default function Modal({
   modal,
   title,
 }: {
-  children: React.ReactElement;
+  children: React.ReactNode;
   modal: RefObject<HTMLDialogElement>;
   title: string;
 }) {
