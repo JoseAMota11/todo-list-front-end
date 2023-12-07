@@ -33,4 +33,9 @@ export class Todos {
     const response = await axios.delete<{ message: string }>(`${URL}/${id}`);
     return response.data;
   }
+
+  static async done({ id, done }: { id: Todo['id']; done: number }) {
+    const response = await axios.put<void>(`${URL}/done/${id}`, { done });
+    return response.data;
+  }
 }

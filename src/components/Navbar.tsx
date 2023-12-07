@@ -12,7 +12,7 @@ export default function Navbar() {
     <nav className="h-[60px] bg-white/60 backdrop-blur flex justify-center sticky top-0 left-0 z-[1]">
       <div className="w-[800px] max-[800px]:px-4 flex items-center justify-between">
         <header>
-          <h1 className="text-2xl font-bold">TO-DO List</h1>
+          <h1 className="text-2xl font-bold select-none">TO-DO List</h1>
         </header>
         <button
           className="py-2 px-4 max-[600px]:py-1 max-[600px]:px-2 bg-sky-600 text-white rounded-md font-semibold hover:bg-sky-500"

@@ -34,6 +34,13 @@ export default function CreateTodoForm() {
       reset({ title: '', description: '' });
       setAlert({ show: true, message: data.message, type: 'success' });
     },
+    onError: (error: any) => {
+      setAlert({
+        show: true,
+        message: error.response.data.error,
+        type: 'error',
+      });
+    },
   });
 
   return (

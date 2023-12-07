@@ -38,6 +38,13 @@ export default function EditPage() {
       navigate('/');
       setAlert({ show: true, message: data.message, type: 'informational' });
     },
+    onError: (error: any) => {
+      setAlert({
+        show: true,
+        message: error.response.data.error,
+        type: 'error',
+      });
+    },
   });
 
   useEffect(() => {
@@ -57,6 +64,7 @@ export default function EditPage() {
           }
         })}
       >
+        <h2 className="uppercase font-bold text-2xl">Edit TO-DO</h2>
         <label htmlFor="title" className="flex flex-col gap-1">
           <span className="font-semibold">Title</span>
           <input

@@ -8,7 +8,7 @@ import React, {
 type Alert = {
   show: boolean;
   message: string;
-  type: 'success' | 'informational';
+  type: 'success' | 'informational' | 'error';
 };
 
 type AlertContextType = {

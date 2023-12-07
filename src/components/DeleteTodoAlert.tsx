@@ -9,11 +9,19 @@ export default function DeleteTodoAlert({ id }: { id: string | number }) {
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: Todos.delete,
+    mutationKey: ['todos'],
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
       deleteTodoModal.current?.close();
       document.body.style.overflow = 'auto';
       setAlert({ show: true, message: data.message, type: 'informational' });
+    },
+    onError: (error: any) => {
+      setAlert({
+        show: true,
+        message: error.response.data.error,
+        type: 'error',
+      });
     },
   });
 
