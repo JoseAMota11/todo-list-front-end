@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Todos } from '../services/todos.services';
 import { useAlert } from '../hooks/useAlert';
 import { useModal } from '../hooks/useModal';
+import { Todo } from '../types/todos';
 
 type Inputs = {
   title: string;
@@ -38,7 +39,7 @@ export default function CreateTodoForm() {
   return (
     <form
       className="w-[360px] max-[400px]:w-[300px] flex flex-col gap-4"
-      onSubmit={handleSubmit((data) => mutation.mutate(data))}
+      onSubmit={handleSubmit((data) => mutation.mutate(data as Todo))}
     >
       <label htmlFor="title" className="flex flex-col gap-1">
         <span className="font-semibold">Title</span>
