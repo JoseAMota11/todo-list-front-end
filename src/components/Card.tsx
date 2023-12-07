@@ -1,15 +1,15 @@
 import { MdDelete, MdEdit, MdOutlineDone } from 'react-icons/md';
 import { Todo } from '../types/todos';
 import { Link } from 'react-router-dom';
-import Modal from './Modal';
-import DeleteTodoAlert from './DeleteTodoAlert';
 import { useModal } from '../hooks/useModal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Todos } from '../services/todos.services';
 import { useAlert } from '../hooks/useAlert';
+import { useTodoId } from '../hooks/useTodoId';
 
 export default function Card({ todo }: { todo: Todo }) {
   const { title, description } = todo;
+  const { setTodoID } = useTodoId();
   const { deleteTodoModal } = useModal();
   const { setAlert } = useAlert();
   const queryClient = useQueryClient();
@@ -29,6 +29,7 @@ export default function Card({ todo }: { todo: Todo }) {
 
   const handleDeleteOpen = () => {
     deleteTodoModal.current?.showModal();
+    setTodoID(todo.id);
     document.body.style.overflow = 'hidden';
   };
 
@@ -42,67 +43,57 @@ export default function Card({ todo }: { todo: Todo }) {
 
   if (!todo.done) {
     return (
-      <>
-        <div className="rounded-md shadow-lg p-2 bg-white relative">
-          <div className="absolute top-2 right-2 flex gap-2 bg-gray-200 p-1 rounded-md">
-            <MdOutlineDone
-              className="fill-gray-700 hover:fill-green-600 cursor-pointer"
+      <div className="rounded-md shadow-lg p-2 bg-white relative">
+        <div className="absolute top-2 right-2 flex gap-2 bg-gray-200 p-1 rounded-md">
+          <MdOutlineDone
+            className="fill-gray-700 hover:fill-green-600 cursor-pointer"
+            size={20}
+            onClick={markAsDone}
+          />
+          <Link to={`/edit/${todo.id}`}>
+            <MdEdit
+              className="fill-gray-700 hover:fill-blue-600 cursor-pointer"
               size={20}
-              onClick={markAsDone}
             />
-            <Link to={`/edit/${todo.id}`}>
-              <MdEdit
-                className="fill-gray-700 hover:fill-blue-600 cursor-pointer"
-                size={20}
-              />
-            </Link>
-            <MdDelete
-              className="fill-gray-700 hover:fill-red-600 cursor-pointer"
-              size={20}
-              onClick={handleDeleteOpen}
-            />
-          </div>
-          <h2 className="text-xl font-semibold line-clamp-1">{title}</h2>
-          <p className="text-gray-500 line-clamp-2">{description}</p>
+          </Link>
+          <MdDelete
+            className="fill-gray-700 hover:fill-red-600 cursor-pointer"
+            size={20}
+            onClick={handleDeleteOpen}
+          />
         </div>
-        <Modal modal={deleteTodoModal} title="Delete TO-DO">
-          <DeleteTodoAlert id={todo.id} />
-        </Modal>
-      </>
+        <h2 className="text-xl font-semibold line-clamp-1">{title}</h2>
+        <p className="text-gray-500 line-clamp-2">{description}</p>
+      </div>
     );
   } else {
     return (
-      <>
-        <div className="rounded-md shadow-lg p-2 bg-white relative opacity-50">
-          <div className="absolute top-2 right-2 flex gap-2 bg-gray-200 p-1 rounded-md">
-            <MdOutlineDone
-              className="fill-green-700 hover:fill-green-700 cursor-pointer"
+      <div className="rounded-md shadow-lg p-2 bg-white relative opacity-50">
+        <div className="absolute top-2 right-2 flex gap-2 bg-gray-200 p-1 rounded-md">
+          <MdOutlineDone
+            className="fill-green-700 hover:fill-green-700 cursor-pointer"
+            size={20}
+            onClick={markAsUndone}
+          />
+          <Link to={`/edit/${todo.id}`}>
+            <MdEdit
+              className="fill-gray-700 hover:fill-blue-600 cursor-pointer"
               size={20}
-              onClick={markAsUndone}
             />
-            <Link to={`/edit/${todo.id}`}>
-              <MdEdit
-                className="fill-gray-700 hover:fill-blue-600 cursor-pointer"
-                size={20}
-              />
-            </Link>
-            <MdDelete
-              className="fill-gray-700 hover:fill-red-600 cursor-pointer"
-              size={20}
-              onClick={handleDeleteOpen}
-            />
-          </div>
-          <h2 className="text-xl font-semibold line-clamp-1 line-through italic">
-            {title}
-          </h2>
-          <p className="text-gray-500 line-clamp-2 line-through italic">
-            {description}
-          </p>
+          </Link>
+          <MdDelete
+            className="fill-gray-700 hover:fill-red-600 cursor-pointer"
+            size={20}
+            onClick={handleDeleteOpen}
+          />
         </div>
-        <Modal modal={deleteTodoModal} title="Delete TO-DO">
-          <DeleteTodoAlert id={todo.id} />
-        </Modal>
-      </>
+        <h2 className="text-xl font-semibold line-clamp-1 line-through italic">
+          {title}
+        </h2>
+        <p className="text-gray-500 line-clamp-2 line-through italic">
+          {description}
+        </p>
+      </div>
     );
   }
 }

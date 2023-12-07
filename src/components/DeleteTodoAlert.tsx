@@ -2,8 +2,10 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useModal } from '../hooks/useModal';
 import { Todos } from '../services/todos.services';
 import { useAlert } from '../hooks/useAlert';
+import { useTodoId } from '../hooks/useTodoId';
 
-export default function DeleteTodoAlert({ id }: { id: string | number }) {
+export default function DeleteTodoAlert() {
+  const { todoID } = useTodoId();
   const { deleteTodoModal } = useModal();
   const { setAlert } = useAlert();
   const queryClient = useQueryClient();
@@ -31,7 +33,7 @@ export default function DeleteTodoAlert({ id }: { id: string | number }) {
         Are you sure you want to delete this TO-DO?
       </p>
       <button
-        onClick={() => mutate(id)}
+        onClick={() => mutate(todoID)}
         className="h-[40px] w-full uppercase bg-red-500 hover:bg-red-400 rounded-md font-semibold text-white select-none"
       >
         Delete
