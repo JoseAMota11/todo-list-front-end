@@ -31,7 +31,7 @@ export default function CreateTodoForm() {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
       createTodoModal.current?.close();
       document.body.style.overflow = 'auto';
-      reset({ title: '', description: '' });
+      reset();
       setAlert({ show: true, message: data.message, type: 'success' });
     },
     onError: (error: any) => {
@@ -57,7 +57,7 @@ export default function CreateTodoForm() {
           placeholder="Learn React..."
           className="h-[40px] rounded-md border border-gray-300 indent-2"
         />
-        {errors.title?.message ? (
+        {errors.title ? (
           <span className="text-sm text-red-600 flex gap-1 items-center">
             <MdErrorOutline size={18} className="fill-red-600" />
             {errors.title.message}
@@ -72,7 +72,7 @@ export default function CreateTodoForm() {
           placeholder="I have to study react at 07:00 a.m."
           className="resize-y min-h-[80px] max-h-[150px] rounded-md border border-gray-300 p-2"
         />
-        {errors.description?.message ? (
+        {errors.description ? (
           <span className="text-sm text-red-600 flex gap-1 items-center">
             <MdErrorOutline size={18} className="fill-red-600" />
             {errors.description.message}

@@ -16,9 +16,9 @@ export default function EditPage() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
-  } = useForm({
+    setValue,
+  } = useForm<{ title: string; description: string }>({
     resolver: zodResolver(TodoSchema),
   });
   const { data } = useQuery({
@@ -50,9 +50,10 @@ export default function EditPage() {
   useEffect(() => {
     if (data) {
       const { title, description } = data[0];
-      reset({ title, description });
+      setValue('title', title);
+      setValue('description', description);
     }
-  }, [data, reset]);
+  }, [data, setValue]);
 
   return (
     <section className="grid min-h-screen place-content-center">
@@ -74,10 +75,10 @@ export default function EditPage() {
             placeholder="Learn React..."
             className="h-[40px] rounded-md border border-gray-300 indent-2"
           />
-          {errors.title?.message ? (
+          {errors.title ? (
             <span className="text-sm text-red-600 flex gap-1 items-center">
               <MdErrorOutline size={18} className="fill-red-600" />
-              {errors.title.message as string}
+              {errors.title.message}
             </span>
           ) : null}
         </label>
@@ -89,10 +90,10 @@ export default function EditPage() {
             placeholder="I have to study react at 07:00 a.m."
             className="resize-y min-h-[80px] max-h-[150px] rounded-md border border-gray-300 p-2"
           />
-          {errors.description?.message ? (
+          {errors.description ? (
             <span className="text-sm text-red-600 flex gap-1 items-center">
               <MdErrorOutline size={18} className="fill-red-600" />
-              {errors.description.message as string}
+              {errors.description.message}
             </span>
           ) : null}
         </label>
