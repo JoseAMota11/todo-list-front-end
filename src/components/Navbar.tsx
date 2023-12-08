@@ -15,7 +15,7 @@ export default function Navbar() {
           <h1 className="text-2xl font-bold select-none">TO-DO List</h1>
         </header>
         <button
-          className="py-2 px-4 max-[600px]:py-1 max-[600px]:px-2 bg-sky-600 text-white rounded-md font-semibold hover:bg-sky-500"
+          className="py-2 px-4 max-[600px]:py-1 max-[600px]:px-2 bg-sky-800 text-white rounded-md font-semibold hover:bg-sky-700"
           onClick={openModal}
         >
           Create a new TO-DO

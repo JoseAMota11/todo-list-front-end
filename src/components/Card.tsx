@@ -75,7 +75,7 @@ export default function Card({ todo }: { todo: Todo }) {
             size={20}
             onClick={markAsUndone}
           />
-          <Link to={`/edit/${todo.id}`}>
+          <Link to={`/edit/${todo.id}`} aria-label="Go to edit page!">
             <MdEdit
               className="fill-gray-700 hover:fill-blue-600 cursor-pointer"
               size={20}
