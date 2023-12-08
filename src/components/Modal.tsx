@@ -22,7 +22,7 @@ export default function Modal({
     >
       <article className="flex flex-col gap-4 p-2">
         <div className="border-b border-b-gray-300 flex justify-between items-center">
-          <p className="font-semibold text-xl uppercase">{title}</p>
+          <p className="font-semibold text-2xl uppercase">{title}</p>
           <IoIosClose
             size={50}
             onClick={closeModal}

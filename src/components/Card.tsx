@@ -9,6 +9,7 @@ import { useTodoId } from '../hooks/useTodoId';
 
 export default function Card({ todo }: { todo: Todo }) {
   const { title, description } = todo;
+
   const { setTodoID } = useTodoId();
   const { deleteTodoModal } = useModal();
   const { setAlert } = useAlert();
@@ -43,7 +44,10 @@ export default function Card({ todo }: { todo: Todo }) {
 
   if (!todo.done) {
     return (
-      <div className="rounded-md shadow-lg p-2 bg-white relative">
+      <div
+        className="rounded-md shadow-lg p-2 bg-white relative animate-mount-done"
+        // style={{ animationDelay: `${delay}ms` }}
+      >
         <div className="absolute top-2 right-2 flex gap-2 bg-gray-200 p-1 rounded-md">
           <MdOutlineDone
             className="fill-gray-700 hover:fill-green-600 cursor-pointer"
@@ -68,7 +72,10 @@ export default function Card({ todo }: { todo: Todo }) {
     );
   } else {
     return (
-      <div className="rounded-md shadow-lg p-2 bg-white relative opacity-50">
+      <div
+        className="rounded-md shadow-lg p-2 bg-white relative animate-mount-undone"
+        // style={{ animationDelay: `${delay}ms` }}
+      >
         <div className="absolute top-2 right-2 flex gap-2 bg-gray-200 p-1 rounded-md">
           <MdOutlineDone
             className="fill-green-700 hover:fill-green-700 cursor-pointer"
