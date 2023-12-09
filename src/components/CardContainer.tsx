@@ -3,8 +3,10 @@ import { Todos } from '../services/todos.services';
 import { useQuery } from '@tanstack/react-query';
 import Card from './Card';
 import { Todo } from '../types/todos';
+import { useSearchParams } from 'react-router-dom';
 
 export default function CardContainer() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const {
     isLoading,
     isError,
@@ -17,7 +19,17 @@ export default function CardContainer() {
     data: Todo[] | undefined;
   } = useQuery({
     queryKey: ['todos'],
-    queryFn: Todos.get,
+    queryFn: async () => {
+      if (searchParams.has('search')) {
+        if (searchParams.get('search') !== '') {
+          return Todos.getBySearch(searchParams.get('search') as string);
+        } else {
+          setSearchParams({});
+        }
+      }
+
+      return Todos.get();
+    },
   });
 
   if (isLoading) {

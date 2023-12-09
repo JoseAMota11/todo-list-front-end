@@ -13,6 +13,11 @@ export class Todos {
     return response.data;
   }
 
+  static async getBySearch(search: string) {
+    const response = await axios.get<Todo[]>(`${URL}?search=${search}`);
+    return response.data;
+  }
+
   static async post({ title, description }: Todo) {
     const response = await axios.post<{ message: string }>(URL, {
       title,
