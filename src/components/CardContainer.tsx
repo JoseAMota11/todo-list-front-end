@@ -2,9 +2,20 @@ import { BarLoader } from 'react-spinners';
 import { Todos } from '../services/todos.services';
 import { useQuery } from '@tanstack/react-query';
 import Card from './Card';
+import { Todo } from '../types/todos';
 
 export default function CardContainer() {
-  const { isLoading, isError, error, data } = useQuery({
+  const {
+    isLoading,
+    isError,
+    error,
+    data,
+  }: {
+    isLoading: boolean;
+    isError: boolean;
+    error: any;
+    data: Todo[] | undefined;
+  } = useQuery({
     queryKey: ['todos'],
     queryFn: Todos.get,
   });
@@ -14,7 +25,7 @@ export default function CardContainer() {
   }
 
   if (isError) {
-    return <p className="text-lg">{error.message}</p>;
+    return <p className="text-lg">{error.response.data.message}</p>;
   }
 
   return (

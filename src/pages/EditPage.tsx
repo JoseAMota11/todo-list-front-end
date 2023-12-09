@@ -21,13 +21,18 @@ export default function EditPage() {
   } = useForm<{ title: string; description: string }>({
     resolver: zodResolver(TodoSchema),
   });
-  const { data } = useQuery({
+  const {
+    data,
+    error,
+    isError,
+  }: { data: Todo[] | undefined; error: any; isError: boolean } = useQuery({
     queryKey: ['todo', { id }],
     queryFn: async () => {
       if (id) {
         return Todos.getOne(id);
       }
     },
+    retry: false,
   });
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -53,7 +58,15 @@ export default function EditPage() {
       setValue('title', title);
       setValue('description', description);
     }
-  }, [data, setValue]);
+
+    if (isError) {
+      setAlert({
+        show: true,
+        message: error.response.data.message,
+        type: 'error',
+      });
+    }
+  }, [data, setValue, setAlert, error, isError]);
 
   return (
     <section className="grid min-h-screen place-content-center">

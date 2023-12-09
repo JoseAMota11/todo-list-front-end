@@ -1,23 +1,22 @@
-import AlertWrapper from './context/alert.context';
-import IdWrapper from './context/idTodo.context';
-import ModalWrapper from './context/modal.context';
+import Alert from './components/Alert';
+import { useAlert } from './hooks/useAlert';
 import EditPage from './pages/EditPage';
 import Home from './pages/Home';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export default function App() {
+  const { alert } = useAlert();
+  const { show, message } = alert;
+
   return (
-    <AlertWrapper>
-      <ModalWrapper>
-        <IdWrapper>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" Component={Home} />
-              <Route path="/edit/:id" Component={EditPage} />
-            </Routes>
-          </BrowserRouter>
-        </IdWrapper>
-      </ModalWrapper>
-    </AlertWrapper>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" Component={Home} />
+          <Route path="/edit/:id" Component={EditPage} />
+        </Routes>
+      </BrowserRouter>
+      {show ? <Alert message={message} /> : null}
+    </>
   );
 }
