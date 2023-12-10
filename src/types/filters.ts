@@ -1,3 +1,4 @@
 export type Filters = {
-  orderby: 'ASC' | 'DESC';
+  orderby: 'title' | 'description' | 'created_at';
+  descending_order: 'ASC' | 'DESC';
 };

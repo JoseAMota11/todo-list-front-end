@@ -6,12 +6,13 @@ import { type Filters } from '../types/filters';
 export class Todos {
   static async get(filters?: Filters) {
     if (filters) {
-      const NEW_URL = new URLSearchParams(URL);
+      const PARAMS = new URLSearchParams('');
       for (const [key, value] of Object.entries(filters)) {
-        NEW_URL.set(key, value);
+        PARAMS.set(key, value);
       }
 
-      const response = await axios.get<Todo[]>(NEW_URL.toString());
+      const NEW_URL = `${URL}?${decodeURIComponent(PARAMS.toString())}`;
+      const response = await axios.get<Todo[]>(NEW_URL);
       return response.data;
     }
 

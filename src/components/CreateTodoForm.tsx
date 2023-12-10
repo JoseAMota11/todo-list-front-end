@@ -18,6 +18,7 @@ export default function CreateTodoForm() {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(TodoSchema),
@@ -25,7 +26,7 @@ export default function CreateTodoForm() {
   const { setAlert } = useAlert();
   const { createTodoModal } = useModal();
   const queryClient = useQueryClient();
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: Todos.post,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
@@ -35,18 +36,26 @@ export default function CreateTodoForm() {
       setAlert({ show: true, message: data.message, type: 'success' });
     },
     onError: (error: any) => {
-      setAlert({
-        show: true,
-        message: error.response.data.error,
-        type: 'error',
-      });
+      if (error.response.data.title) {
+        setError('title', {
+          message: error.response.data.title,
+          type: 'manual',
+        });
+      }
+
+      if (error.response.data.description) {
+        setError('description', {
+          message: error.response.data.description,
+          type: 'manual',
+        });
+      }
     },
   });
 
   return (
     <form
       className="w-[360px] max-[400px]:w-[300px] flex flex-col gap-4"
-      onSubmit={handleSubmit((data) => mutation.mutate(data as Todo))}
+      onSubmit={handleSubmit((data) => mutate(data as Todo))}
     >
       <label htmlFor="title" className="flex flex-col gap-1">
         <span className="font-semibold">Title</span>
@@ -82,6 +91,7 @@ export default function CreateTodoForm() {
       <button
         className="h-[40px] uppercase bg-sky-800 text-white rounded-md font-semibold hover:bg-sky-700 select-none"
         type="submit"
+        disabled={isPending}
       >
         Add TO-DO
       </button>
