@@ -80,7 +80,7 @@ export default function CreateTodoForm() {
         ) : null}
       </label>
       <button
-        className="h-[40px] uppercase bg-sky-500 hover:bg-sky-400 rounded-md font-semibold text-white select-none"
+        className="h-[40px] uppercase bg-sky-800 text-white rounded-md font-semibold hover:bg-sky-700 select-none"
         type="submit"
       >
         Add TO-DO

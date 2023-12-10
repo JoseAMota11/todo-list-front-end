@@ -5,9 +5,10 @@ import Navbar from '../components/Navbar';
 import { useModal } from '../hooks/useModal';
 import DeleteTodoAlert from '../components/DeleteTodoAlert';
 import Options from '../components/Options';
+import Filters from '../components/Filters';
 
 export default function Home() {
-  const { createTodoModal, deleteTodoModal } = useModal();
+  const { createTodoModal, deleteTodoModal, filtersModal } = useModal();
 
   return (
     <>
@@ -21,6 +22,9 @@ export default function Home() {
       </Modal>
       <Modal modal={deleteTodoModal} title="Delete TO-DO">
         <DeleteTodoAlert />
+      </Modal>
+      <Modal modal={filtersModal} title="Filters">
+        <Filters />
       </Modal>
     </>
   );

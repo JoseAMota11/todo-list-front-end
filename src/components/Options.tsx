@@ -1,37 +1,11 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import debounce from 'lodash.debounce';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { Todos } from '../services/todos.services';
-import { useAlert } from '../hooks/useAlert';
-import { useSearchParams } from 'react-router-dom';
+import { ChangeEvent } from 'react';
+import useSearch from '../hooks/useSearch';
+import { useModal } from '../hooks/useModal';
 
 export default function Options() {
-  const [search, setSearch] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { setAlert } = useAlert();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation({
-    mutationKey: ['todos', { search }],
-    mutationFn: Todos.getBySearch,
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['todos', { search }] });
-      queryClient.setQueryData(['todos'], data);
-    },
-    onError: (error: any) => {
-      setAlert({
-        show: true,
-        message: error.response.data.message,
-        type: 'error',
-      });
-    },
-  });
-
-  useEffect(() => {
-    if (searchParams.has('search') && inputRef.current) {
-      inputRef.current.value = searchParams.get('search') as string;
-    }
-  }, [searchParams, inputRef]);
+  const { setSearchParams, setSearch, mutate, inputRef } = useSearch();
+  const { filtersModal } = useModal();
 
   const handleSearch = debounce((e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -40,9 +14,21 @@ export default function Options() {
     mutate(value);
   }, 400);
 
+  const handleFilterOpen = () => {
+    filtersModal.current?.showModal();
+    document.body.style.overflow = 'hidden';
+  };
+
   return (
     <div className="flex justify-center max-[800px]:px-2">
-      <form className="w-[800px] py-4 flex justify-end">
+      <form className="w-[800px] py-4 flex justify-end gap-2">
+        <button
+          className="py-2 px-4 max-[600px]:py-1 max-[600px]:px-2 bg-sky-800 text-white rounded-md font-semibold hover:bg-sky-700"
+          type="button"
+          onClick={handleFilterOpen}
+        >
+          Filters
+        </button>
         <input
           ref={inputRef}
           type="search"

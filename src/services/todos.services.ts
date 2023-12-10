@@ -1,9 +1,20 @@
 import axios from 'axios';
 import { URL } from '../libs/constants';
 import { type Todo } from '../types/todos';
+import { type Filters } from '../types/filters';
 
 export class Todos {
-  static async get() {
+  static async get(filters?: Filters) {
+    if (filters) {
+      const NEW_URL = new URLSearchParams(URL);
+      for (const [key, value] of Object.entries(filters)) {
+        NEW_URL.set(key, value);
+      }
+
+      const response = await axios.get<Todo[]>(NEW_URL.toString());
+      return response.data;
+    }
+
     const response = await axios.get<Todo[]>(URL);
     return response.data;
   }

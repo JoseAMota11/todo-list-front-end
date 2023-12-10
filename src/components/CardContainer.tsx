@@ -20,12 +20,10 @@ export default function CardContainer() {
   } = useQuery({
     queryKey: ['todos'],
     queryFn: async () => {
-      if (searchParams.has('search')) {
-        if (searchParams.get('search') !== '') {
-          return Todos.getBySearch(searchParams.get('search') as string);
-        } else {
-          setSearchParams({});
-        }
+      if (searchParams.has('search') && searchParams.get('search') !== '') {
+        return Todos.getBySearch(searchParams.get('search') as string);
+      } else {
+        setSearchParams({});
       }
 
       return Todos.get();
@@ -37,7 +35,22 @@ export default function CardContainer() {
   }
 
   if (isError) {
-    return <p className="text-lg">{error.response.data.message}</p>;
+    if (error.response) {
+      return (
+        <p className="text-2xl font-bold text-red-600">
+          {error.response.data?.message}
+        </p>
+      );
+    } else if (error.message) {
+      return <p className="text-2xl font-bold text-red-600">{error.message}</p>;
+    }
+
+    return (
+      <p className="text-lg">
+        Oops, it seems there's a glitch in the system. We apologize for the
+        inconvenience.
+      </p>
+    );
   }
 
   return (
