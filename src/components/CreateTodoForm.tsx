@@ -27,6 +27,7 @@ export default function CreateTodoForm() {
   const { createTodoModal } = useModal();
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
+    mutationKey: ['todos', { type: 'create' }],
     mutationFn: Todos.post,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
@@ -36,16 +37,17 @@ export default function CreateTodoForm() {
       setAlert({ show: true, message: data.message, type: 'success' });
     },
     onError: (error: any) => {
-      if (error.response.data.title) {
+      const { title, description } = error.response.data;
+      if (title) {
         setError('title', {
-          message: error.response.data.title,
+          message: title,
           type: 'manual',
         });
       }
 
-      if (error.response.data.description) {
+      if (description) {
         setError('description', {
-          message: error.response.data.description,
+          message: description,
           type: 'manual',
         });
       }

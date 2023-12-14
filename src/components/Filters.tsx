@@ -9,10 +9,12 @@ export default function Filters() {
   const { register, handleSubmit } = useForm();
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
-    mutationKey: ['todos', { orderby: 'created_at', descending_order: 'asc' }],
+    mutationKey: ['todos', { type: 'filters' }],
     mutationFn: Todos.get,
-    onSuccess: (data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['todos', { ...variables }] });
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ['todos', { type: 'filters' }],
+      });
       queryClient.setQueryData(['todos'], data);
       filtersModal.current?.close();
       document.body.style.overflow = 'auto';
